@@ -22,6 +22,12 @@ export default defineConfig({
   ],
 
   themeConfig: {
+    // CHANGE ME: replace docs/public/logo.svg with your own image (any format, same filename, or
+    // update this path to match). VitePress serves everything in docs/public/ from the site root,
+    // and handles the base-path prefixing for this specific option itself, unlike the footer's
+    // own logo image below, which needs withBase() by hand (see theme/index.ts).
+    logo: '/logo.svg',
+
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Posts', link: '/posts/' },
