@@ -7,7 +7,8 @@ export interface Post {
   authorId: string
   authorName: string
   tags: string[]
-  excerpt: string
+  description: string
+  image: string
   url: string
 }
 
@@ -18,12 +19,18 @@ export { data }
 // file next to this one, but not this file itself (a .ts file, never matched by *.md) and not
 // posts/index.md, filtered out below by URL. Runs at build time (and on save in `npm run dev`),
 // so a new post file shows up in the list with no other code change needed.
+//
+// Deliberately not using createContentLoader's own `excerpt` option: it slices the raw markdown
+// from the top of the file down to a `<!-- more -->` marker, which on these posts means
+// everything before the marker, including the <script setup> block, the hero <img>, and the tags
+// loop above the heading, not just the intended teaser sentence. A plain `description` frontmatter
+// field (the same pattern vitepress-portfolio's work.data.ts uses) sidesteps that entirely: it's
+// one string, written by hand, always exactly what shows in the list.
 export default createContentLoader('posts/*.md', {
-  excerpt: true,
   transform(raw): Post[] {
     return raw
       .filter(({ url }) => url !== '/posts/')
-      .map(({ url, frontmatter, excerpt }) => {
+      .map(({ url, frontmatter }) => {
         const authorId = frontmatter.author ?? ''
         return {
           title: frontmatter.title ?? 'Untitled',
@@ -31,7 +38,8 @@ export default createContentLoader('posts/*.md', {
           authorId,
           authorName: authors[authorId]?.name ?? authorId,
           tags: frontmatter.tags ?? [],
-          excerpt: excerpt ?? '',
+          description: frontmatter.description ?? '',
+          image: frontmatter.image ?? '',
           url,
         }
       })

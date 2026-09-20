@@ -4,9 +4,24 @@ title: 3 things we check before every quote
 date: 2026-07-14
 author: priya
 tags: [quotes, how-we-work]
+image: /posts/three-things-we-check.jpg
+description: A quote that changes once we show up isn't a quote, it's a guess with a number attached. Three things we always check first.
 ---
 
-<div class="prose dark:prose-invert mx-auto max-w-2xl px-6 py-16">
+<script setup>
+import { withBase } from 'vitepress'
+import { useData } from 'vitepress'
+
+const { frontmatter } = useData()
+</script>
+
+<img :src="withBase(frontmatter.image)" alt="" class="aspect-video w-full object-cover">
+
+<div class="mx-auto flex max-w-2xl flex-wrap gap-2 px-6 pt-8">
+<a v-for="tag in frontmatter.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/20 dark:text-brand-500">#{{ tag }}</a>
+</div>
+
+<div class="prose dark:prose-invert mx-auto max-w-2xl px-6 pb-16 pt-4">
 
 # 3 things we check before every quote
 

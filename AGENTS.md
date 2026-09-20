@@ -84,6 +84,47 @@ placeholder-for-convenience.
 The honeypot input must stay. It is hidden, unlabelled to screen readers, and filtering depends on
 it being submitted empty.
 
+## CSS-layering: Tailwind utility classes losing to unlayered element resets
+
+Confirmed by inspecting the actual compiled `docs/.vitepress/dist/assets/*.css` (same finding as
+vitepress-portfolio's AGENTS.md, copied here since this repo hit it independently): several base
+element resets in this build (`h1`-`h6`'s font-size/weight/margin, `p`'s margin, and
+`button,input,optgroup,select,textarea`'s border/padding/background) sit outside any `@layer`
+block, while Tailwind's own utility classes are generated inside `@layer utilities`. Unlayered
+rules always beat layered ones regardless of specificity or source order, so a heading, paragraph,
+or form control styled only through a plain utility class can silently render as if the class
+weren't there, with no error. **Fix: append `!` to the specific classes that need to win**
+(`text-3xl!`, `mx-auto!`, `border-gray-300!`, `bg-brand-500!`, etc.), confirmed by checking the
+compiled CSS or a live computed style, not applied everywhere by default.
+
+## `createContentLoader`'s `excerpt` option needs a string, not `true`, to use `<!-- more -->`
+
+`excerpt: true` makes vitepress ask gray-matter for an excerpt with no separator configured,
+which falls back to gray-matter's own default (a second `---` line), not `<!-- more -->`. With
+none of these posts having a second `---`, that came back empty on every post, silently, with the
+post list and home page showing a blank line where a teaser should be. Passing a string instead
+(`excerpt: '<!-- more -->'`) is what actually splits on that marker. Even then, the excerpt is
+**everything in the file from right after frontmatter down to the marker** rendered to HTML,
+which is a problem the moment a post has a hero `<img>`, a tags loop, or any other markup before
+its heading: the excerpt ends up including that markup too, rendered as inert HTML text (since a
+`v-html` binding doesn't compile Vue directives), producing literal `#{{ tag }}` text and a broken
+image where a teaser sentence should be. **This repo doesn't use `excerpt` at all as a result**:
+`posts.data.ts` reads a hand-written `description` frontmatter field instead, the same pattern
+vitepress-portfolio's `work.data.ts` uses for its own card descriptions. One string per post,
+always exactly what shows in the list, no markdown-slicing involved.
+
+## A `v-for` nested inside another `v-for`, written with each attribute on its own line, can lose its scope silently
+
+Hit adding thumbnails to `posts/index.md`: the outer `v-for="post in posts"` kept working, but an
+inner `v-for="tag in post.tags"` one level deeper (itself written across several indented lines)
+stopped resolving `tag` at all, rendering the literal text `#{{ tag }}` once instead of a pill per
+tag, with the rest of that post's markup also landing in the wrong place in the DOM. No error
+either. The fix that resolved it: write each element in that block as flat, single-line HTML
+(one tag per line, all attributes on that same line) rather than multi-line with nested
+indentation. Not root-caused further, since the practical fix was simple and reliable. If a
+nested `v-for` in this repo starts producing literal `{{ }}` text or content in a strange spot on
+the page, try flattening the markup before assuming the data itself is wrong.
+
 ## Writing style
 
 - Second person, present tense, short sentences.
