@@ -20,6 +20,10 @@ You need:
 - [Node.js](https://nodejs.org) 20 or later.
 - Some comfort with a terminal.
 
+Don't have some of this yet, or not sure how? [Setting up your
+computer](https://bootform.com/docs/computer-setup) walks through installing Git and Node.js, a
+basic terminal tutorial, and installing and using VS Code, from scratch.
+
 If you want a lighter starting point with a home page, pricing, and just a couple of hand-written
 posts, [vitepress-marketing](https://github.com/BootForm/vitepress-marketing) is that; this repo
 assumes you specifically want the blog mechanics.
