@@ -18,3 +18,20 @@
   --vp-c-brand-2: #24552f;
   --vp-c-brand-3: #1c4425;
 }
+
+/* VitePress's own base.css resets headings, paragraphs, links, lists, blockquotes and figures
+   (font-size: 16px, margin: 0, list-style: none...) outside any @layer. Tailwind Typography's
+   `prose` styles live inside @layer utilities, and unlayered rules always beat layered ones, so
+   without this every `prose` block renders flat: a `# Heading` the size of body text, no space
+   between paragraphs, bullet-less lists. `revert-layer` hands exactly these properties back to
+   the layered `prose` rules. It is scoped to `.prose` and skips anything inside `not-prose`. */
+.prose :where(h1, h2, h3, h4, h5, h6, p, a, ol, ul, li, blockquote, figure):not(:where(.not-prose, .not-prose *)) {
+  margin: revert-layer;
+  padding: revert-layer;
+  font-size: revert-layer;
+  font-weight: revert-layer;
+  line-height: revert-layer;
+  color: revert-layer;
+  text-decoration: revert-layer;
+  list-style: revert-layer;
+}
