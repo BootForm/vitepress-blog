@@ -24,7 +24,7 @@ const { frontmatter } = useData()
 <img :src="withBase(frontmatter.image)" alt="" class="aspect-video w-full object-cover">
 
 <div class="mx-auto flex max-w-2xl flex-wrap gap-2 px-6 pt-8">
-<a v-for="tag in frontmatter.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/20 dark:text-brand-500">#{{ tag }}</a>
+<a v-for="tag in frontmatter.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/30 dark:text-white/90">#{{ tag }}</a>
 </div>
 
 <!-- `prose` styles plain markdown (headings, paragraphs, lists) without a class on every element.

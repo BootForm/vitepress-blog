@@ -125,6 +125,16 @@ indentation. Not root-caused further, since the practical fix was simple and rel
 nested `v-for` in this repo starts producing literal `{{ }}` text or content in a strange spot on
 the page, try flattening the markup before assuming the data itself is wrong.
 
+## Adding a new kind of content
+
+Want a section this template doesn't have yet, such as books, team members, events, or services?
+Use the `add-collection` skill from [`BootForm/site-skills`](https://github.com/BootForm/site-skills)
+(`/plugin marketplace add BootForm/site-skills`, then `/plugin install vitepress-sites@site-skills`).
+It copies a shared card component, an entry header, a data loader and a listing page into this
+repo, following every convention in this file, so each new entry afterwards is one markdown file.
+The same files and steps are readable without the plugin, under
+`plugins/vitepress-sites/skills/add-collection/` in that repo. Leave the existing posts, tags and RSS as they are; a new collection sits alongside them.
+
 ## Writing style
 
 - Second person, present tense, short sentences.
