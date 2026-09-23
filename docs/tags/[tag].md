@@ -15,7 +15,7 @@ const { params } = useData()
 
 <div class="mx-auto max-w-2xl px-6 py-16">
 
-<h1 class="mb-8 text-3xl font-bold tracking-tight">Posts tagged &ldquo;{{ params.tag }}&rdquo;</h1>
+<h1 class="mb-8! text-3xl! font-bold! tracking-tight">Posts tagged &ldquo;{{ params.tag }}&rdquo;</h1>
 
 <div v-for="post in posts.filter((p) => p.tags.includes(params.tag))" :key="post.url" class="mb-8">
   <a :href="withBase(post.url)" class="text-lg font-semibold hover:text-brand-500">{{ post.title }}</a>

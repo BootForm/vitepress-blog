@@ -97,6 +97,15 @@ weren't there, with no error. **Fix: append `!` to the specific classes that nee
 (`text-3xl!`, `mx-auto!`, `border-gray-300!`, `bg-brand-500!`, etc.), confirmed by checking the
 compiled CSS or a live computed style, not applied everywhere by default.
 
+**`prose` blocks are the one exception, handled once in `style.css`.** The same unlayered
+resets (VitePress's own `base.css`: `h1`-`h6` at 16px, `p` and lists with no margin, lists with no
+bullets, links with no colour) also flatten every `prose` block, and `!` can't fix that, because
+`prose` styles child elements the markdown gives you no class on. Confirmed live 2026-09-23: every
+`# Heading` in a `prose` wrapper rendered at body size, with no paragraph spacing. The last rule in
+`docs/.vitepress/theme/style.css` fixes it with `revert-layer`, handing exactly those properties
+back to the layered `prose` rules, scoped to `.prose` and skipping `not-prose`. Keep that rule;
+markdown inside a `prose` wrapper needs no `!` classes of its own.
+
 ## `createContentLoader`'s `excerpt` option needs a string, not `true`, to use `<!-- more -->`
 
 `excerpt: true` makes vitepress ask gray-matter for an excerpt with no separator configured,
