@@ -30,7 +30,7 @@ function formatDate(iso) {
      hero every other template in this org starts from. The `!`-suffixed classes force this past
      the same unlayered element resets documented in AGENTS.md's CSS-layering note. -->
 <div
-  class="relative flex h-[280px] items-center justify-center overflow-hidden bg-cover bg-center text-center sm:h-[340px]"
+  class="relative flex min-h-[280px] items-center justify-center overflow-hidden bg-cover bg-center py-12 text-center sm:min-h-[340px]"
   :style="{ backgroundImage: `url(${withBase('/home/hero.jpg')})` }"
 >
   <div class="absolute inset-0 bg-black/55"></div>
@@ -40,9 +40,9 @@ function formatDate(iso) {
       Notes from a small landscaping crew. What we're learning, what went wrong, and the
       occasional before-and-after.
     </p>
-    <div class="mt-6 flex justify-center gap-3">
-      <a :href="withBase('/posts/')" class="rounded-md bg-brand-500 px-5 py-2.5 font-medium text-white! no-underline! hover:bg-brand-600">Read the posts</a>
-      <a :href="withBase('/contact')" class="rounded-md bg-white/10 px-5 py-2.5 font-medium text-white! no-underline! ring-1 ring-white/40 hover:bg-white/20">Get in touch</a>
+    <div class="mx-auto mt-6 flex max-w-xs flex-col gap-3 sm:max-w-none sm:flex-row sm:justify-center">
+      <a :href="withBase('/posts/')" class="whitespace-nowrap rounded-md bg-brand-500 px-5 py-2.5 text-center font-medium text-white! no-underline! hover:bg-brand-600">Read the posts</a>
+      <a :href="withBase('/contact')" class="whitespace-nowrap rounded-md bg-white/10 px-5 py-2.5 text-center font-medium text-white! no-underline! ring-1 ring-white/40 hover:bg-white/20">Get in touch</a>
     </div>
   </div>
 </div>
