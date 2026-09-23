@@ -41,8 +41,8 @@ function formatDate(iso) {
       occasional before-and-after.
     </p>
     <div class="mt-6 flex justify-center gap-3">
-      <a href="/posts/" class="rounded-md bg-brand-500 px-5 py-2.5 font-medium text-white! no-underline! hover:bg-brand-600">Read the posts</a>
-      <a href="/contact" class="rounded-md bg-white/10 px-5 py-2.5 font-medium text-white! no-underline! ring-1 ring-white/40 hover:bg-white/20">Get in touch</a>
+      <a :href="withBase('/posts/')" class="rounded-md bg-brand-500 px-5 py-2.5 font-medium text-white! no-underline! hover:bg-brand-600">Read the posts</a>
+      <a :href="withBase('/contact')" class="rounded-md bg-white/10 px-5 py-2.5 font-medium text-white! no-underline! ring-1 ring-white/40 hover:bg-white/20">Get in touch</a>
     </div>
   </div>
 </div>

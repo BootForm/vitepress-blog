@@ -32,7 +32,7 @@ function formatDate(iso) {
 <p class="mt-1 text-sm opacity-50">{{ formatDate(post.date) }} · {{ post.authorName }}</p>
 <p class="mt-3 opacity-80">{{ post.description }}</p>
 <div v-if="post.tags.length" class="mt-3 flex flex-wrap gap-2">
-<a v-for="tag in post.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/20 dark:text-brand-500">#{{ tag }}</a>
+<a v-for="tag in post.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/30 dark:text-white/90">#{{ tag }}</a>
 </div>
 </div>
 </div>
