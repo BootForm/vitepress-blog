@@ -16,6 +16,9 @@ export default defineConfig({
   },
 
   head: [
+    // The browser tab icon. `head` links are not base-prefixed by VitePress, so this path includes
+    // `base` by hand: CHANGE ME alongside `base` if you rename the repo or move to a custom domain.
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-blog/logo.svg' }],
     // Lets a browser or feed reader auto-discover the feed from the page itself, instead of
     // needing the URL handed to it directly.
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'The Cedar & Vine Journal', href: '/vitepress-blog/feed.xml' }],

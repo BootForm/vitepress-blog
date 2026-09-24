@@ -35,7 +35,7 @@ assumes you specifically want the blog mechanics.
 Click **Use this template**, then **Create a new repository**.
 
 > **Naming it something other than `vitepress-blog`?** Open `docs/.vitepress/config.mts` and
-> change `base: '/vitepress-blog/'` to match (`/your-repo-name/`), and do the same for `SITE_URL`
+> change `base: '/vitepress-blog/'` (and the favicon path under `head`, in the same file) to match (`/your-repo-name/`), and do the same for `SITE_URL`
 > in `scripts/generate-rss.mjs`. Miss either and the deployed site or the RSS feed's links break,
 > while everything still looks fine locally.
 
