@@ -1,7 +1,8 @@
 # Working in this repo
 
 This is a teaching template: a real VitePress blog engine, doing the four things VitePress ships
-none of by default (a generated post list, tags, RSS, authors), not just markdown files with a
+none of by default (a generated post list, tags, RSS, authors), plus its built-in local search
+turned on, not just markdown files with a
 sidebar turned off. See [`vitepress-marketing`](https://github.com/BootForm/vitepress-marketing)
 for the simpler "marketing site with a hand-maintained blog list" version; this repo exists
 because that one's blog page deliberately doesn't try to do any of this.
@@ -38,6 +39,13 @@ reasoning; every page in this repo already follows it.
 - **Authors** (`docs/.vitepress/authors.ts`): a plain object, keyed by the id a post's frontmatter
   uses (`author: priya`). `posts.data.ts` looks the name up from here so every post referencing
   that key updates together if the author's display name ever changes.
+- **Search** (`themeConfig.search` in `config.mts`, `provider: 'local'`): VitePress's own
+  MiniSearch index, built at build time and searched in the browser, so nothing to host. It indexes
+  each page's Markdown by heading: a post needs its own `#` heading (every example post has one
+  inside its `prose` div) to appear. `posts/index.md` and `tags/[tag].md` set `search: false`
+  because they're Vue-generated lists with no text of their own; the tag page's source heading is
+  literally `{{ params.tag }}`, which would otherwise show up in results. The home and contact pages
+  have no Markdown headings, so they stay out on their own. Keep it that way: search is for posts.
 
 ## `base` and internal links: two different failure modes, not one
 

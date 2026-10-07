@@ -1,5 +1,7 @@
 ---
 layout: page
+# Kept out of search: this page is a generated list, with no text of its own to find.
+search: false
 ---
 
 <script setup>
