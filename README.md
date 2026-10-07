@@ -1,12 +1,12 @@
 # A real blog engine for VitePress
 
 VitePress ships none of what an actual blog needs out of the box: a post list, tags, an RSS feed,
-authors. This template does. It's the next step after
+authors. This template does, and turns on VitePress's built-in search too. It's the next step after
 [vitepress-marketing](https://github.com/BootForm/vitepress-marketing), for when the blog itself
 is the point, not a small section of a bigger marketing site.
 
-By the end you will have a blog with a generated post list, working tag pages, an RSS feed, and a
-working contact form.
+By the end you will have a blog with a generated post list, working tag pages, an RSS feed,
+full-text search, and a working contact form.
 
 **[See what you are building →](https://bootform.github.io/vitepress-blog/)**
 
@@ -74,8 +74,8 @@ Look for `CHANGE ME` across a few files:
   ---
   ```
 
-  Add a new post by copying one of these files. The post list, the tag pages, and the RSS feed all
-  regenerate from whatever's actually in this folder, no other file to update.
+  Add a new post by copying one of these files. The post list, the tag pages, the RSS feed and the
+  search index all regenerate from whatever's actually in this folder, no other file to update.
 
 ---
 
@@ -119,6 +119,11 @@ Your feed is live at `https://yourname.github.io/vitepress-blog/feed.xml` once i
 **The RSS feed is empty, or a link in it 404s.** Run `node scripts/generate-rss.mjs` on its own
 and read what it prints; it's a plain script, easiest debugged directly rather than through the
 full `npm run build`. A 404'ing link almost always means `SITE_URL` doesn't match `base`.
+
+**Search finds a page you don't want in the results, or misses a post.** Search indexes each
+page's Markdown headings and text, and runs entirely in the browser (no service, no API key). Keep a
+page out with `search: false` in its frontmatter, as `docs/posts/index.md` and
+`docs/tags/[tag].md` do. A post with no `#` heading of its own won't show up: give it one.
 
 **`npm run build` fails with something about a content loader.** If you're editing
 `docs/tags/[tag].paths.js`, see `AGENTS.md`'s section on why it can't use `createContentLoader`
