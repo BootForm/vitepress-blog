@@ -45,7 +45,7 @@ title: Contact
   </div>
 
   <!-- A spam trap. Real people never see it, bots fill it in. Leave it alone. -->
-  <input type="text" name="_honeypot" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+  <input type="text" name="bform_website" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" aria-hidden="true">
 
   <button type="submit" class="self-start rounded-md bg-brand-500! px-5! py-2! font-medium text-white! hover:bg-brand-600!">
     Send
