@@ -12,12 +12,12 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.5",
     "cross-var": "^1.1.0",
+    "git-cz": "^4.9.0",
     "gray-matter": "^4.0.3",
     "tailwindcss": "^4.3.3",
-    "vitepress": "^1.6.4",
-    "@types/node": "^26.6.5",
-    "git-cz": "^4.9.0"
+    "vitepress": "^2.0.0-alpha.20"
   },
   "engines": {
     "node": ">=24.0.0"
