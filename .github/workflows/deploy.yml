@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history, not the default single commit: a post with no `date` in its frontmatter
+          # (and none in its file name) gets the date of its last git commit, which needs the log.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
