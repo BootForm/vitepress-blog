@@ -27,7 +27,6 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  srcDir: "docs",
 
   head: [
     // The browser tab icon. `head` links are not base-prefixed by VitePress, so this path includes
