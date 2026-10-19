@@ -19,9 +19,15 @@ export default defineConfig({
   // URLs, so a mismatched base there produces a feed whose links 404, not a build error.
   base: '/vitepress-blog/',
 
+  // CHANGE ME: Replace the hostname with yours, e.g. 'https://www.mydomain.com'
+  sitemap: {
+    hostname: 'https://bootform.github.io',
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },
+  srcDir: "docs",
 
   head: [
     // The browser tab icon. `head` links are not base-prefixed by VitePress, so this path includes
