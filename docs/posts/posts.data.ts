@@ -21,6 +21,9 @@ export interface Post {
   url: string
 }
 
+declare const data: Post[]
+export { data }
+
 export default createContentLoader(
   `${removeLeadingSlash(localConfig.postsUrlPrefix)}/*.md`,
   {
