@@ -2,22 +2,25 @@ import { readdirSync, readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
-import config, { localConfig } from "./docs/.vitepress/config.ts";
+import config, { localConfig } from "../docs/.vitepress/config.ts";
 import {
   getDateByFileName,
   getGitLastUpdated,
   extractTitle,
+  fixUrl,
 } from "../utils.ts";
 
 const SITE_URL = config.sitemap?.hostname;
 const FEED_TITLE = config.title;
 const FEED_DESCRIPTION = config.description;
 const POSTS = localConfig.postsUrlPrefix;
+const BASE = config.base ? `/${config.base}` : "";
+const EXTENSION = config.cleanUrls ? "" : ".html";
 const PUBLIC = "public";
 
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
-const postsDir = join(rootDir, config.srcDir, POSTS);
-const publicDir = join(rootDir, config.srcDir, PUBLIC);
+const postsDir = join(rootDir, config.srcDir!, POSTS);
+const publicDir = join(rootDir, config.srcDir!, PUBLIC);
 
 const posts = readdirSync(postsDir)
   .filter(
@@ -35,7 +38,7 @@ const posts = readdirSync(postsDir)
         data.title ?? extractTitle(fileContent) ?? localConfig.defaultTitle,
       date:
         data.date ?? getDateByFileName(filePath) ?? getGitLastUpdated(filePath),
-      url: `${SITE_URL}${urlDir}${slug}`,
+      url: fixUrl(`${SITE_URL}${BASE}${urlDir}${slug}${EXTENSION}`),
     };
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
