@@ -1,6 +1,14 @@
 import { defineConfig } from 'vitepress'
 import tailwindcss from '@tailwindcss/vite'
 
+export const localConfig = {
+  postsUrlPrefix: "/posts", // Should start with '/'
+  defaultAuthor: "",
+  defaultTitle: "Untitled",
+  defaultImageUrl: "/image_not_found.png",
+  defaultDescription: "No description",
+};
+
 export default defineConfig({
   // CHANGE ME: your blog's name and description.
   title: 'The Cedar & Vine Journal',
@@ -10,6 +18,11 @@ export default defineConfig({
   // Also update SITE_URL in scripts/generate-rss.mjs to match. The RSS feed's links are absolute
   // URLs, so a mismatched base there produces a feed whose links 404, not a build error.
   base: '/vitepress-blog/',
+
+  // CHANGE ME: Replace the hostname with yours, e.g. 'https://www.mydomain.com'
+  sitemap: {
+    hostname: 'https://bootform.github.io',
+  },
 
   vite: {
     plugins: [tailwindcss()],
