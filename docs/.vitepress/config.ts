@@ -1,12 +1,19 @@
 import { defineConfig } from 'vitepress'
 import tailwindcss from '@tailwindcss/vite'
 
+// Used by docs/posts/posts.data.ts and scripts/generate-rss.ts. The `default*` values are the last
+// resort, for a post whose frontmatter leaves a field out and whose markdown has nothing to use
+// instead (see posts.data.ts for where each fallback comes from).
 export const localConfig = {
-  postsUrlPrefix: "/posts", // Should start with '/'
+  // CHANGE ME if you rename the docs/posts folder. Starts with '/', no trailing slash.
+  postsUrlPrefix: "/posts",
+  // A key in authors.ts, or "" for no author.
   defaultAuthor: "",
   defaultTitle: "Untitled",
-  defaultImageUrl: "/image_not_found.png",
-  defaultDescription: "No description",
+  // "" shows no image at all. To show a placeholder instead, put the file in docs/public/ and
+  // set its path here, e.g. "/placeholder.jpg".
+  defaultImageUrl: "",
+  defaultDescription: "",
 };
 
 export default defineConfig({

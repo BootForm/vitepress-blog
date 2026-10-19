@@ -14,8 +14,16 @@ export function fixUrl(url: string) {
   return urlFixed ? urlFixed.trim() : null;
 }
 
+// The raw file starts with its frontmatter, and YAML comments there (`# CHANGE ME: ...`) look
+// exactly like a markdown heading to a regex, so every extractor below skips it first.
+export function stripFrontmatter(fileContent: string): string {
+  return fileContent.replace(/^---\r?\n[\s\S]*?\r?\n---[ \t]*(?:\r?\n|$)/, "");
+}
+
 export function extractTitle(fileContent: string | undefined) {
-  const match = fileContent!.match(/^\s*#\s*(.+)$/m);
+  if (!fileContent) return null;
+  // `# Title` only: not `## Subheading`, and not `#{{ tag }}` in a Vue template.
+  const match = stripFrontmatter(fileContent).match(/^[ \t]*#[ \t]+(.+)$/m);
   return match ? match[1].trim() : null;
 }
 
@@ -25,12 +33,15 @@ export function extractFirstImage(
   const markdownImgRegex = /!\[.*?\]\((.*?)\)/;
   const htmlImgRegex = /<img\s+[^>]*?\b(?<![:\w-])src\s*=\s*["'](.*?)["']/i;
 
-  const mdMatch = fileContent!.match(markdownImgRegex);
+  if (!fileContent) return null;
+  const content = stripFrontmatter(fileContent);
+
+  const mdMatch = content.match(markdownImgRegex);
   if (mdMatch) {
     return mdMatch[1].trim();
   }
 
-  const htmlMatch = fileContent!.match(htmlImgRegex);
+  const htmlMatch = content.match(htmlImgRegex);
   if (htmlMatch) {
     return htmlMatch[1].trim();
   }
@@ -45,7 +56,7 @@ export function extractDescription(
 ): string | null {
   const codeBlockRegex =
     /(?:^|\r?\n)[ \t]*(?:`{3,}|~{3,})[^\r\n]*\r?\n[\s\S]*?(?:(?:\r?\n[ \t]*(?:`{3,}|~{3,})[^\r\n]*(?=\r?\n|$))|(?![^]))/g;
-  const contentWithoutCode = fileContent.replace(codeBlockRegex, "\n");
+  const contentWithoutCode = stripFrontmatter(fileContent).replace(codeBlockRegex, "\n");
 
   const titleRegex = /^[ \t]*#[ \t]+[^\r\n]+(?:\r?\n|$)/m;
   const titleMatch = contentWithoutCode.match(titleRegex);
