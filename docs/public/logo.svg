@@ -1,5 +1,5 @@
 <!-- CHANGE ME: this is a placeholder mark, not a real logo. Replace this whole file with your own
-     (same filename, or update the references to it in config.mts and theme/index.ts if you rename
+     (same filename, or update the references to it in config.ts and theme/index.ts if you rename
      it). Any image format works: SVG, PNG, whatever you have. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" role="img" aria-label="Logo">
   <circle cx="20" cy="20" r="19" fill="none" stroke="#2f6b3f" stroke-width="2"/>

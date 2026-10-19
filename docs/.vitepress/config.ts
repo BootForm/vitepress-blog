@@ -22,11 +22,12 @@ export default defineConfig({
   description: 'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
 
   // CHANGE ME if you rename the repo, or set to '/' once you're serving from a custom domain.
-  // Also update SITE_URL in scripts/generate-rss.mjs to match. The RSS feed's links are absolute
-  // URLs, so a mismatched base there produces a feed whose links 404, not a build error.
+  // scripts/generate-rss.ts reads this same value, so the RSS feed's links follow it.
   base: '/vitepress-blog/',
 
-  // CHANGE ME: Replace the hostname with yours, e.g. 'https://www.mydomain.com'
+  // CHANGE ME: Replace the hostname with yours, e.g. 'https://www.mydomain.com'. The RSS feed
+  // uses it too: feed links have to be absolute, so a wrong hostname here means every link in the
+  // feed points at someone else's site.
   sitemap: {
     hostname: 'https://bootform.github.io',
   },
@@ -66,7 +67,7 @@ export default defineConfig({
       provider: 'local',
     },
 
-    // No `sidebar` key here either, same reasoning as vitepress-marketing's config.mts. A blog
+    // No `sidebar` key here either, same reasoning as vitepress-marketing's config. A blog
     // engine is still a marketing surface first; it shouldn't read as documentation.
   },
 })

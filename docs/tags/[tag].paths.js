@@ -8,7 +8,7 @@ import matter from 'gray-matter'
 // it (`[tag].md`). Each entry's `params` become that page's route params, read back in the
 // template via `useData().params`.
 //
-// Reads frontmatter directly with gray-matter, the same way scripts/generate-rss.mjs does,
+// Reads frontmatter directly with gray-matter, the same way scripts/generate-rss.ts does,
 // rather than vitepress's own `createContentLoader`. A `.paths.js` file's `paths()` runs before
 // vitepress's content-loader context is ready, so calling `createContentLoader(...).load()` here
 // fails with "content loader invoked without an active vitepress process". `posts/posts.data.ts`
