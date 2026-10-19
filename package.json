@@ -1,17 +1,27 @@
 {
   "name": "vitepress-blog",
-  "private": true,
+  "description": "Vitepress blog template",
   "type": "module",
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "node scripts/generate-rss.mjs && vitepress build docs",
-    "preview": "vitepress preview docs"
+    "prebuild": "cross-var $npm_execpath run gen-rss",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs",
+    "gen-rss": "node scripts/generate-rss.ts"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
+    "cross-var": "^1.1.0",
     "gray-matter": "^4.0.3",
     "tailwindcss": "^4.3.3",
     "vitepress": "^1.6.4"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.5",
+    "git-cz": "^4.9.0"
   }
 }
