@@ -31,15 +31,17 @@ reasoning; every page in this repo already follows it.
   `createContentLoader` needs is ready. `posts.data.ts` can use `createContentLoader` because
   something (a page, `npm run dev`'s live reload) actually requests that data later, once
   vitepress is fully running.
-- **RSS** (`scripts/generate-rss.mjs`, run by `npm run build` before `vitepress build` itself):
+- **RSS** (`scripts/generate-rss.ts`, run by npm's `prebuild` hook before `vitepress build` itself):
   a plain Node script, also reading frontmatter with `gray-matter`, writing `docs/public/feed.xml`
-  so vitepress's own build copies it into `dist/` unchanged. `SITE_URL` here must match
-  `config.mts`'s `base` (schemed and hostnamed, since feed links have to be absolute). A mismatch
-  produces a feed that validates and builds fine, with every link 404ing.
+  so vitepress's own build copies it into `dist/` unchanged. It imports `config.ts` and builds
+  each link from `sitemap.hostname`, `base` and `cleanUrls` there, so the feed can't drift from
+  the site. A wrong `sitemap.hostname` still produces a feed that validates and builds fine, with
+  every link 404ing. Node runs the `.ts` file directly (type stripping), which is why the repo
+  needs Node 24.
 - **Authors** (`docs/.vitepress/authors.ts`): a plain object, keyed by the id a post's frontmatter
   uses (`author: priya`). `posts.data.ts` looks the name up from here so every post referencing
   that key updates together if the author's display name ever changes.
-- **Search** (`themeConfig.search` in `config.mts`, `provider: 'local'`): VitePress's own
+- **Search** (`themeConfig.search` in `config.ts`, `provider: 'local'`): VitePress's own
   MiniSearch index, built at build time and searched in the browser, so nothing to host. It indexes
   each page's Markdown by heading: a post needs its own `#` heading (every example post has one
   inside its `prose` div) to appear. `posts/index.md` and `tags/[tag].md` set `search: false`
@@ -74,9 +76,9 @@ reasoning; every page in this repo already follows it.
   `prose dark:prose-invert`. Skipping this was a real bug caught and fixed after the fact in
   `vitepress-marketing`; this repo starts with it already in place. See that repo's `AGENTS.md`
   for the full explanation of why plain markdown needs it at all.
-- **`base` in `config.mts` must match how the site is actually served**, same reasoning as
-  `vitepress-marketing`'s `AGENTS.md`. This repo also has `SITE_URL` in
-  `scripts/generate-rss.mjs`, which needs the same update in the same commit.
+- **`base` in `config.ts` must match how the site is actually served**, same reasoning as
+  `vitepress-marketing`'s `AGENTS.md`. The RSS script reads it from there, but the favicon and
+  feed links under `head` are written out by hand and need the same update in the same commit.
 - **Comments in the frontmatter and config are the lesson**, not clutter. Keep `CHANGE ME` markers
   where the reader is meant to edit, and keep them rare enough to still mean something.
 
@@ -132,9 +134,20 @@ which is a problem the moment a post has a hero `<img>`, a tags loop, or any oth
 its heading: the excerpt ends up including that markup too, rendered as inert HTML text (since a
 `v-html` binding doesn't compile Vue directives), producing literal `#{{ tag }}` text and a broken
 image where a teaser sentence should be. **This repo doesn't use `excerpt` at all as a result**:
-`posts.data.ts` reads a hand-written `description` frontmatter field instead, the same pattern
-vitepress-portfolio's `work.data.ts` uses for its own card descriptions. One string per post,
-always exactly what shows in the list, no markdown-slicing involved.
+`posts.data.ts` reads a hand-written `description` frontmatter field first, the same pattern
+vitepress-portfolio's `work.data.ts` uses for its own card descriptions. Only when that's missing
+does it fall back to `extractExcerpt` in `utils.ts`, which starts *after* the post's `#` heading,
+stops at the first `##`, and strips markup, so none of the hero/tags markup above the heading can
+leak in.
+
+## The fallback extractors read the raw file, frontmatter included
+
+`createContentLoader`'s `includeSrc` hands over the whole file, YAML frontmatter and all. The
+example posts have YAML comments there (`# CHANGE ME: a real photo...`), which a "first line
+starting with `#`" regex happily takes for the post's title. Every extractor in `utils.ts` strips
+the frontmatter block first (`stripFrontmatter`) and only accepts `# ` with a space, so a `##`
+subheading or a `#{{ tag }}` line in a Vue template doesn't count either. Keep that if you add
+another extractor.
 
 ## A `v-for` nested inside another `v-for`, written with each attribute on its own line, can lose its scope silently
 

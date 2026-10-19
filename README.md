@@ -17,7 +17,7 @@ full-text search, and a working contact form.
 You need:
 
 - A free GitHub account.
-- [Node.js](https://nodejs.org) 20 or later.
+- [Node.js](https://nodejs.org) 24 or later.
 - Some comfort with a terminal.
 
 Don't have some of this yet, or not sure how? [Setting up your
@@ -34,10 +34,10 @@ assumes you specifically want the blog mechanics.
 
 Click **Use this template**, then **Create a new repository**.
 
-> **Naming it something other than `vitepress-blog`?** Open `docs/.vitepress/config.mts` and
-> change `base: '/vitepress-blog/'` (and the favicon path under `head`, in the same file) to match (`/your-repo-name/`), and do the same for `SITE_URL`
-> in `scripts/generate-rss.mjs`. Miss either and the deployed site or the RSS feed's links break,
-> while everything still looks fine locally.
+> **Naming it something other than `vitepress-blog`?** Open `docs/.vitepress/config.ts` and
+> change `base: '/vitepress-blog/'` to match (`/your-repo-name/`), along with the favicon and feed
+> paths under `head` in the same file. Miss one and the deployed site breaks while everything
+> still looks fine locally. The RSS feed reads `base` from this file, so it follows on its own.
 
 Then:
 
@@ -56,13 +56,17 @@ Open the address it prints. That's your blog, running locally.
 
 Look for `CHANGE ME` across a few files:
 
-- **`docs/.vitepress/config.mts`**: your blog's title, description, and nav.
+- **`docs/.vitepress/config.ts`**: your blog's title, description, nav, and the site's address
+  under `sitemap.hostname` (the RSS feed uses it for its links).
 - **`docs/.vitepress/theme/style.css`**: your brand colour.
 - **`docs/.vitepress/authors.ts`**: your real authors. A post references one by key
   (`author: priya`); change the name here and every post using that key updates.
 - **`docs/index.md`**: the home page hero.
 - **`docs/posts/*.md`**: the three example posts. Each one's frontmatter sets its title, date,
-  author, and tags:
+  author, and tags. All of it is optional: leave a field out and the post list works it out from
+  the post itself (title from the first `#` heading, image from the first image, date from a
+  `2026-09-20` in the file name or else the file's last git commit, description from the text
+  under the heading):
 
   ```md
   ---
@@ -116,9 +120,9 @@ Your feed is live at `https://yourname.github.io/vitepress-blog/feed.xml` once i
 **A tag page 404s, or a post's tag doesn't show up anywhere.** Check the post's frontmatter:
 `tags` needs to be a real YAML list (`tags: [a, b]` or one `- a` per line), not a bare string.
 
-**The RSS feed is empty, or a link in it 404s.** Run `node scripts/generate-rss.mjs` on its own
+**The RSS feed is empty, or a link in it 404s.** Run `npm run gen-rss` on its own
 and read what it prints; it's a plain script, easiest debugged directly rather than through the
-full `npm run build`. A 404'ing link almost always means `SITE_URL` doesn't match `base`.
+full `npm run build`. A 404'ing link almost always means `sitemap.hostname` in `config.ts` isn't your site's real address.
 
 **Search finds a page you don't want in the results, or misses a post.** Search indexes each
 page's Markdown headings and text, and runs entirely in the browser (no service, no API key). Keep a
@@ -130,7 +134,7 @@ page out with `search: false` in its frontmatter, as `docs/posts/index.md` and
 the way `posts/posts.data.ts` does.
 
 **The Actions deploy fails but `npm run build` works locally.** Compare Node versions: the
-workflow pins Node 20 (`.github/workflows/deploy.yml`). Different Node major versions occasionally
+workflow pins Node 24 (`.github/workflows/deploy.yml`). Different Node major versions occasionally
 disagree on something.
 
 ## Licence

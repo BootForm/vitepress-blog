@@ -1,15 +1,36 @@
 import { defineConfig } from 'vitepress'
 import tailwindcss from '@tailwindcss/vite'
 
+// Used by docs/posts/posts.data.ts and scripts/generate-rss.ts. The `default*` values are the last
+// resort, for a post whose frontmatter leaves a field out and whose markdown has nothing to use
+// instead (see posts.data.ts for where each fallback comes from).
+export const localConfig = {
+  // CHANGE ME if you rename the docs/posts folder. Starts with '/', no trailing slash.
+  postsUrlPrefix: "/posts",
+  // A key in authors.ts, or "" for no author.
+  defaultAuthor: "",
+  defaultTitle: "Untitled",
+  // "" shows no image at all. To show a placeholder instead, put the file in docs/public/ and
+  // set its path here, e.g. "/placeholder.jpg".
+  defaultImageUrl: "",
+  defaultDescription: "",
+};
+
 export default defineConfig({
   // CHANGE ME: your blog's name and description.
   title: 'The Cedar & Vine Journal',
   description: 'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
 
   // CHANGE ME if you rename the repo, or set to '/' once you're serving from a custom domain.
-  // Also update SITE_URL in scripts/generate-rss.mjs to match. The RSS feed's links are absolute
-  // URLs, so a mismatched base there produces a feed whose links 404, not a build error.
+  // scripts/generate-rss.ts reads this same value, so the RSS feed's links follow it.
   base: '/vitepress-blog/',
+
+  // CHANGE ME: Replace the hostname with yours, e.g. 'https://www.mydomain.com'. The RSS feed
+  // uses it too: feed links have to be absolute, so a wrong hostname here means every link in the
+  // feed points at someone else's site.
+  sitemap: {
+    hostname: 'https://bootform.github.io',
+  },
 
   vite: {
     plugins: [tailwindcss()],
@@ -46,7 +67,7 @@ export default defineConfig({
       provider: 'local',
     },
 
-    // No `sidebar` key here either, same reasoning as vitepress-marketing's config.mts. A blog
+    // No `sidebar` key here either, same reasoning as vitepress-marketing's config. A blog
     // engine is still a marketing surface first; it shouldn't read as documentation.
   },
 })
