@@ -18,9 +18,10 @@ const BASE = config.base ? `/${config.base}` : "";
 const EXTENSION = config.cleanUrls ? "" : ".html";
 const PUBLIC = "public";
 
+const srcDir = config.srcDir ? config.srcDir : "docs";
 const rootDir = dirname(dirname(fileURLToPath(import.meta.url)));
-const postsDir = join(rootDir, config.srcDir!, POSTS);
-const publicDir = join(rootDir, config.srcDir!, PUBLIC);
+const postsDir = join(rootDir, srcDir, POSTS);
+const publicDir = join(rootDir, srcDir, PUBLIC);
 
 const posts = readdirSync(postsDir)
   .filter(
