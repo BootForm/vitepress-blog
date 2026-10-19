@@ -1,6 +1,11 @@
 import { spawnSync } from "child_process";
 import path from "node:path";
 
+export function fixUrl(url: string) {
+  const urlFixed = url.replace(/(?<![:‘’"'])\/\//g, "/");
+  return urlFixed ? urlFixed.trim() : null;
+}
+
 export function extractTitle(fileContent: string | undefined) {
   const match = fileContent!.match(/^\s*#\s*(.+)$/m);
   return match ? match[1].trim() : null;
