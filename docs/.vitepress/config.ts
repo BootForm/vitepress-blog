@@ -1,6 +1,14 @@
 import { defineConfig } from 'vitepress'
 import tailwindcss from '@tailwindcss/vite'
 
+export const localConfig = {
+  postsUrlPrefix: "/posts", // Should start with '/'
+  defaultAuthor: "",
+  defaultTitle: "Untitled",
+  defaultImageUrl: "/image_not_found.png",
+  defaultDescription: "No description",
+};
+
 export default defineConfig({
   // CHANGE ME: your blog's name and description.
   title: 'The Cedar & Vine Journal',
