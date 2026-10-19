@@ -1,6 +1,14 @@
 import { spawnSync } from "child_process";
 import path from "node:path";
 
+export function removeLeadingSlash(path: string) {
+  return path.replace(/^\/+/, "");
+}
+
+export function removeTrailingSlash(url: string) {
+  return url.replace(/\/+$/, "");
+}
+
 export function fixUrl(url: string) {
   const urlFixed = url.replace(/(?<![:‘’"'])\/\//g, "/");
   return urlFixed ? urlFixed.trim() : null;
