@@ -43,8 +43,6 @@ export function extractDescription(
   maxLength: number = 300,
   inclusive: boolean = true,
 ): string | null {
-  // Strip fenced code blocks first so headers (e.g. ## Results) inside code blocks
-  // are never mistaken for document section headers, and blocks are not cut in half.
   const codeBlockRegex =
     /(?:^|\r?\n)[ \t]*(?:`{3,}|~{3,})[^\r\n]*\r?\n[\s\S]*?(?:(?:\r?\n[ \t]*(?:`{3,}|~{3,})[^\r\n]*(?=\r?\n|$))|(?![^]))/g;
   const contentWithoutCode = fileContent.replace(codeBlockRegex, "\n");
