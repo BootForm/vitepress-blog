@@ -115,6 +115,29 @@ Your feed is live at `https://yourname.github.io/vitepress-blog/feed.xml` once i
 
 ---
 
+## Linting and formatting (optional)
+
+Three scripts, two tools. Neither is needed to write a post — `npm run dev` and `npm run build`
+work exactly as before without them. They are here so a copy of this template can keep its code
+tidy as it grows.
+
+| Script | What it does |
+| --- | --- |
+| `npm run lint` | Runs ESLint over the TypeScript and JavaScript that hold real logic. |
+| `npm run format` | Rewrites the same files with Prettier. |
+| `npm run format:check` | The same as `format`, but only reports which files would change. |
+
+Two things they deliberately leave alone: **markdown** (the posts and the page templates carry Vue
+templates inside markdown, and reformatting them can change the markup in ways the build won't
+complain about), and `deploy.yml` (a formatting nit should never stop someone's blog from going
+live, so the pull-request check lives in its own workflow, `.github/workflows/lint.yml`).
+
+If you add a new script, a `docs/.vitepress/*.ts` config file or a `utils.ts`-style helper, it
+gets picked up automatically — the ESLint config lists the directories, not just the files that
+exist today.
+
+---
+
 ## Frequently hit problems
 
 **A tag page 404s, or a post's tag doesn't show up anywhere.** Check the post's frontmatter:
