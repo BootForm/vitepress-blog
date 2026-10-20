@@ -161,6 +161,22 @@ indentation. Not root-caused further, since the practical fix was simple and rel
 nested `v-for` in this repo starts producing literal `{{ }}` text or content in a strange spot on
 the page, try flattening the markup before assuming the data itself is wrong.
 
+## Keep `prebuild` as plain `npm run gen-rss`
+
+The RSS feed is written by the `prebuild` hook, so it only exists if the package manager runs
+`pre*` scripts. Tested on Windows on 2026-10-20 (see #11):
+
+- **npm 11, pnpm 11 and Yarn 1** run `prebuild` and produce `feed.xml`, plain `npm run gen-rss`
+  included. It needs no helper to work on Windows.
+- **`cross-var $npm_execpath run gen-rss`** (suggested to support other package managers) breaks
+  pnpm 11: `cross-var` pulls in an old `core-js` with an install script, pnpm blocks it until
+  someone runs `pnpm approve-builds`, and `pnpm run build` fails. Don't add it back.
+- **Yarn 2 and later skip `pre*` scripts entirely**, with no warning: the build succeeds and the
+  site ships without `feed.xml`. The README only covers npm, so this is accepted for now. If Yarn
+  support is ever wanted, chain the step into `build` itself
+  (`node scripts/generate-rss.ts && vitepress build docs`, tested under Yarn 4) rather than adding
+  a helper.
+
 ## Growing the site with Claude Code
 
 The `vitepress` plugin in [`BootForm/site-skills`](https://github.com/BootForm/site-skills)
