@@ -1,3 +1,9 @@
+// VitePress injects its resolved config onto `globalThis` while a content loader runs.
+// Declaring the shape once here is why the loader below needs no cast at all.
+declare global {
+  var VITEPRESS_CONFIG: { srcDir: string }
+}
+
 import { createContentLoader } from 'vitepress'
 import { join } from 'path'
 import { authors } from '../.vitepress/authors'
@@ -50,7 +56,7 @@ export default createContentLoader(
       // The folder's index.md has its own URL, and that's the list page itself, not a post.
       const filterUrls = ['/', `${localConfig.postsUrlPrefix}/`]
       // VitePress's own resolved srcDir (docs/ here), the same value createContentLoader reads.
-      const srcDir: string = (globalThis as any).VITEPRESS_CONFIG.srcDir
+      const srcDir: string = globalThis.VITEPRESS_CONFIG.srcDir
       return raw
         .filter(({ url }) => !filterUrls.includes(url))
         .map(({ url, frontmatter, src }) => {

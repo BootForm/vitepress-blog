@@ -140,6 +140,6 @@ export function getGitLastUpdated(filePath: string): string | null {
 }
 
 export function getDateByFileName(filePath: string): string | null {
-  const match = filePath!.match(/(\d{4}\-\d{1,2}\-\d{1,2})/m);
+  const match = filePath!.match(/(\d{4}-\d{1,2}-\d{1,2})/m);
   return match ? match[0].trim() : null;
 }
