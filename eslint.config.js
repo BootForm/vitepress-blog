@@ -22,7 +22,11 @@ export default tseslint.config(
   {
     // Build output and dependencies. `docs/.vitepress/dist` is the built site and
     // `docs/.vitepress/cache` is VitePress's own cache; neither is source.
-    ignores: ['node_modules/**', 'docs/.vitepress/dist/**', 'docs/.vitepress/cache/**'],
+    ignores: [
+      'node_modules/**',
+      'docs/.vitepress/dist/**',
+      'docs/.vitepress/cache/**',
+    ],
   },
 
   // Plain JavaScript rules, everywhere ESLint looks.

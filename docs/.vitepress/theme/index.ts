@@ -19,23 +19,40 @@ export default {
       'layout-bottom': () =>
         h(
           'footer',
-          { class: 'flex flex-wrap items-center justify-center gap-2 border-t border-black/10 px-6 py-8 text-center text-sm opacity-60 dark:border-white/10' },
+          {
+            class:
+              'flex flex-wrap items-center justify-center gap-2 border-t border-black/10 px-6 py-8 text-center text-sm opacity-60 dark:border-white/10',
+          },
           [
             // Unlike config.ts's `logo:` option (which VitePress base-prefixes for you), this is
             // our own plain <img>, so it needs withBase() by hand, the same as any other dynamic
             // href/src built outside markdown-it's own link transform. See AGENTS.md.
-            h('img', { src: withBase('/logo.svg'), alt: '', class: 'h-6 w-6 shrink-0' }),
+            h('img', {
+              src: withBase('/logo.svg'),
+              alt: '',
+              class: 'h-6 w-6 shrink-0',
+            }),
             h('p', null, [
               'Built with ',
               h(
                 'a',
-                { href: 'https://github.com/BootForm/vitepress-blog', class: 'text-brand-500 hover:underline', target: '_blank', rel: 'noopener' },
+                {
+                  href: 'https://github.com/BootForm/vitepress-blog',
+                  class: 'text-brand-500 hover:underline',
+                  target: '_blank',
+                  rel: 'noopener',
+                },
                 'vitepress-blog',
               ),
               '. The form runs on ',
               h(
                 'a',
-                { href: 'https://bootform.com', class: 'text-brand-500 hover:underline', target: '_blank', rel: 'noopener' },
+                {
+                  href: 'https://bootform.com',
+                  class: 'text-brand-500 hover:underline',
+                  target: '_blank',
+                  rel: 'noopener',
+                },
                 'BootForm',
               ),
               '.',

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 /* VitePress toggles dark mode by adding `.dark` to a container ancestor, not via
@@ -25,7 +25,10 @@
    without this every `prose` block renders flat: a `# Heading` the size of body text, no space
    between paragraphs, bullet-less lists. `revert-layer` hands exactly these properties back to
    the layered `prose` rules. It is scoped to `.prose` and skips anything inside `not-prose`. */
-.prose :where(h1, h2, h3, h4, h5, h6, p, a, ol, ul, li, blockquote, figure):not(:where(.not-prose, .not-prose *)) {
+.prose
+  :where(h1, h2, h3, h4, h5, h6, p, a, ol, ul, li, blockquote, figure):not(
+    :where(.not-prose, .not-prose *)
+  ) {
   margin: revert-layer;
   padding: revert-layer;
   font-size: revert-layer;

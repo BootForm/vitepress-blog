@@ -6,20 +6,21 @@ import tailwindcss from '@tailwindcss/vite'
 // instead (see posts.data.ts for where each fallback comes from).
 export const localConfig = {
   // CHANGE ME if you rename the docs/posts folder. Starts with '/', no trailing slash.
-  postsUrlPrefix: "/posts",
+  postsUrlPrefix: '/posts',
   // A key in authors.ts, or "" for no author.
-  defaultAuthor: "",
-  defaultTitle: "Untitled",
+  defaultAuthor: '',
+  defaultTitle: 'Untitled',
   // "" shows no image at all. To show a placeholder instead, put the file in docs/public/ and
   // set its path here, e.g. "/placeholder.jpg".
-  defaultImageUrl: "",
-  defaultDescription: "",
-};
+  defaultImageUrl: '',
+  defaultDescription: '',
+}
 
 export default defineConfig({
   // CHANGE ME: your blog's name and description.
   title: 'The Cedar & Vine Journal',
-  description: 'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
+  description:
+    'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
 
   // CHANGE ME if you rename the repo, or set to '/' once you're serving from a custom domain.
   // scripts/generate-rss.ts reads this same value, so the RSS feed's links follow it.
@@ -39,10 +40,21 @@ export default defineConfig({
   head: [
     // The browser tab icon. `head` links are not base-prefixed by VitePress, so this path includes
     // `base` by hand: CHANGE ME alongside `base` if you rename the repo or move to a custom domain.
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-blog/logo.svg' }],
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-blog/logo.svg' },
+    ],
     // Lets a browser or feed reader auto-discover the feed from the page itself, instead of
     // needing the URL handed to it directly.
-    ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'The Cedar & Vine Journal', href: '/vitepress-blog/feed.xml' }],
+    [
+      'link',
+      {
+        rel: 'alternate',
+        type: 'application/rss+xml',
+        title: 'The Cedar & Vine Journal',
+        href: '/vitepress-blog/feed.xml',
+      },
+    ],
   ],
 
   themeConfig: {

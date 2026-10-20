@@ -62,11 +62,18 @@ export default createContentLoader(
         .map(({ url, frontmatter, src }) => {
           const authorId = frontmatter.author ?? localConfig.defaultAuthor
           // '/posts/my-post.html' (or '/posts/my-post' with cleanUrls) -> 'posts/my-post.md'
-          const relativePath = removeLeadingSlash(url).replace(/\.html$/, '') + '.md'
+          const relativePath =
+            removeLeadingSlash(url).replace(/\.html$/, '') + '.md'
           const absolutePath = join(srcDir, relativePath)
           return {
-            title: frontmatter.title || extractTitle(src) || localConfig.defaultTitle,
-            image: frontmatter.image || extractFirstImage(src) || localConfig.defaultImageUrl,
+            title:
+              frontmatter.title ||
+              extractTitle(src) ||
+              localConfig.defaultTitle,
+            image:
+              frontmatter.image ||
+              extractFirstImage(src) ||
+              localConfig.defaultImageUrl,
             date:
               frontmatter.date ||
               getDateByFileName(absolutePath) ||
@@ -76,7 +83,9 @@ export default createContentLoader(
             authorName: authors[authorId]?.name ?? authorId,
             tags: frontmatter.tags ?? [],
             description:
-              frontmatter.description || extractExcerpt(src ?? '') || localConfig.defaultDescription,
+              frontmatter.description ||
+              extractExcerpt(src ?? '') ||
+              localConfig.defaultDescription,
             url,
           }
         })
