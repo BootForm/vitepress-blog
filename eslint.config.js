@@ -22,11 +22,7 @@ export default tseslint.config(
   {
     // Build output and dependencies. `docs/.vitepress/dist` is the built site and
     // `docs/.vitepress/cache` is VitePress's own cache; neither is source.
-    ignores: [
-      'node_modules/**',
-      'docs/.vitepress/dist/**',
-      'docs/.vitepress/cache/**',
-    ],
+    ignores: ['node_modules/**', 'docs/.vitepress/dist/**', 'docs/.vitepress/cache/**'],
   },
 
   // Plain JavaScript rules, everywhere ESLint looks.
@@ -40,13 +36,7 @@ export default tseslint.config(
   {
     // The files that hold real logic: the site's config, the theme override, the post list
     // loader, the tag-path generator, the RSS script and the shared helpers.
-    files: [
-      'docs/.vitepress/*.ts',
-      'docs/.vitepress/theme/index.ts',
-      'docs/posts/posts.data.ts',
-      'scripts/generate-rss.ts',
-      'utils.ts',
-    ],
+    files: ['docs/.vitepress/*.ts', 'docs/.vitepress/theme/index.ts', 'docs/posts/posts.data.ts', 'scripts/generate-rss.ts', 'utils.ts'],
     languageOptions: {
       // The theme override runs in the browser; the rest runs in Node. Listing both means a
       // global from either environment is allowed, and a typo in a global name is still an error.
@@ -62,6 +52,16 @@ export default tseslint.config(
     files: ['docs/tags/[[]tag].paths.js'],
     languageOptions: {
       globals: globals.node,
+    },
+  },
+  {
+    // Vue single-file components. The repo has no `.vue` file yet, so this block matches nothing
+    // today — it is here so that the day one lands, `vue/multi-word-component-names` is not the
+    // reason it fails. The theme's `Layout` component is a single word, which is exactly what
+    // that rule complains about.
+    files: ['**/*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
     },
   },
 )
