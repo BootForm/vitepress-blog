@@ -3,12 +3,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import matter from 'gray-matter'
 import config, { localConfig } from '../docs/.vitepress/config.ts'
-import {
-  getDateByFileName,
-  getGitLastUpdated,
-  extractTitle,
-  fixUrl,
-} from '../utils.ts'
+import { getDateByFileName, getGitLastUpdated, extractTitle, fixUrl } from '../utils.ts'
 
 const SITE_URL = config.sitemap?.hostname
 const FEED_TITLE = config.title
@@ -24,10 +19,7 @@ const postsDir = join(rootDir, srcDir, POSTS)
 const publicDir = join(rootDir, srcDir, PUBLIC)
 
 const posts = readdirSync(postsDir)
-  .filter(
-    (file) =>
-      file.endsWith('.md') && file !== 'index.md' && file !== 'posts.md',
-  )
+  .filter((file) => file.endsWith('.md') && file !== 'index.md' && file !== 'posts.md')
   .map((file) => {
     const filePath = join(postsDir, file)
     const fileContent = readFileSync(filePath, 'utf-8')
@@ -35,10 +27,8 @@ const posts = readdirSync(postsDir)
     const slug = file.replace(/\.md$/, '')
     const urlDir = POSTS === '/' ? '/' : `${POSTS}/`
     return {
-      title:
-        data.title ?? extractTitle(fileContent) ?? localConfig.defaultTitle,
-      date:
-        data.date ?? getDateByFileName(filePath) ?? getGitLastUpdated(filePath),
+      title: data.title ?? extractTitle(fileContent) ?? localConfig.defaultTitle,
+      date: data.date ?? getDateByFileName(filePath) ?? getGitLastUpdated(filePath),
       url: fixUrl(`${SITE_URL}${BASE}${urlDir}${slug}${EXTENSION}`),
     }
   })

@@ -19,8 +19,7 @@ export const localConfig = {
 export default defineConfig({
   // CHANGE ME: your blog's name and description.
   title: 'The Cedar & Vine Journal',
-  description:
-    'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
+  description: 'Notes on gardens, lawns, and the odd disaster, from a small landscaping crew.',
 
   // CHANGE ME if you rename the repo, or set to '/' once you're serving from a custom domain.
   // scripts/generate-rss.ts reads this same value, so the RSS feed's links follow it.
@@ -40,10 +39,7 @@ export default defineConfig({
   head: [
     // The browser tab icon. `head` links are not base-prefixed by VitePress, so this path includes
     // `base` by hand: CHANGE ME alongside `base` if you rename the repo or move to a custom domain.
-    [
-      'link',
-      { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-blog/logo.svg' },
-    ],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-blog/logo.svg' }],
     // Lets a browser or feed reader auto-discover the feed from the page itself, instead of
     // needing the URL handed to it directly.
     [

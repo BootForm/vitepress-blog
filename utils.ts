@@ -27,9 +27,7 @@ export function extractTitle(fileContent: string | undefined) {
   return match ? match[1].trim() : null
 }
 
-export function extractFirstImage(
-  fileContent: string | undefined,
-): string | null {
+export function extractFirstImage(fileContent: string | undefined): string | null {
   const markdownImgRegex = /!\[.*?\]\((.*?)\)/
   const htmlImgRegex = /<img\s+[^>]*?\b(?<![:\w-])src\s*=\s*["'](.*?)["']/i
 
@@ -49,17 +47,9 @@ export function extractFirstImage(
   return null
 }
 
-export function extractDescription(
-  fileContent: string,
-  maxLength: number = 300,
-  inclusive: boolean = true,
-): string | null {
-  const codeBlockRegex =
-    /(?:^|\r?\n)[ \t]*(?:`{3,}|~{3,})[^\r\n]*\r?\n[\s\S]*?(?:(?:\r?\n[ \t]*(?:`{3,}|~{3,})[^\r\n]*(?=\r?\n|$))|(?![^]))/g
-  const contentWithoutCode = stripFrontmatter(fileContent).replace(
-    codeBlockRegex,
-    '\n',
-  )
+export function extractDescription(fileContent: string, maxLength: number = 300, inclusive: boolean = true): string | null {
+  const codeBlockRegex = /(?:^|\r?\n)[ \t]*(?:`{3,}|~{3,})[^\r\n]*\r?\n[\s\S]*?(?:(?:\r?\n[ \t]*(?:`{3,}|~{3,})[^\r\n]*(?=\r?\n|$))|(?![^]))/g
+  const contentWithoutCode = stripFrontmatter(fileContent).replace(codeBlockRegex, '\n')
 
   const titleRegex = /^[ \t]*#[ \t]+[^\r\n]+(?:\r?\n|$)/m
   const titleMatch = contentWithoutCode.match(titleRegex)
@@ -67,18 +57,13 @@ export function extractDescription(
     return null
   }
 
-  const contentAfterTitle = contentWithoutCode.slice(
-    titleMatch.index + titleMatch[0].length,
-  )
+  const contentAfterTitle = contentWithoutCode.slice(titleMatch.index + titleMatch[0].length)
 
   // Match the first ## Header
   const h2Regex = /^[ \t]*##[ \t]+[^\r\n]+/m
   const h2Match = contentAfterTitle.match(h2Regex)
 
-  const rawSection =
-    h2Match && h2Match.index !== undefined
-      ? contentAfterTitle.slice(0, h2Match.index)
-      : contentAfterTitle
+  const rawSection = h2Match && h2Match.index !== undefined ? contentAfterTitle.slice(0, h2Match.index) : contentAfterTitle
 
   const cleaned = rawSection
     // Strip scripts and styles along with content
@@ -126,11 +111,10 @@ export function extractDescription(
 export const extractExcerpt = extractDescription
 
 export function getGitLastUpdated(filePath: string): string | null {
-  const { stdout, error, status } = spawnSync(
-    'git',
-    ['log', '-1', '--pretty=%ai', '--', path.basename(filePath)],
-    { cwd: path.dirname(filePath), encoding: 'utf8' },
-  )
+  const { stdout, error, status } = spawnSync('git', ['log', '-1', '--pretty=%ai', '--', path.basename(filePath)], {
+    cwd: path.dirname(filePath),
+    encoding: 'utf8',
+  })
   if (error || status !== 0 || !stdout) {
     console.error(`Git log failed or file is not tracked: ${filePath}`)
     return null
