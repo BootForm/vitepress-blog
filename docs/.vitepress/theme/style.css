@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 /* VitePress toggles dark mode by adding `.dark` to a container ancestor, not via

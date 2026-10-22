@@ -1,0 +1,25 @@
+name: Lint
+
+# A separate workflow from deploy.yml, on purpose. deploy.yml publishes the reader's own site on
+# every push to main, and a formatting nit must never stop someone's blog from going live. This
+# one runs on pull requests only, where it can fail without touching the deployed site.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
