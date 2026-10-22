@@ -10,10 +10,9 @@
     "preview": "vitepress preview docs",
     "gen-rss": "node scripts/generate-rss.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --ext .ts,.vue --fix",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,js,css}\"",
-    "format:check": "prettier --check \"**/*.{ts,js,css}\"",
-    "prepare": "husky"
+    "format:check": "prettier --check \"**/*.{ts,js,css}\""
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -22,8 +21,6 @@
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "gray-matter": "^4.0.3",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.4",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.3.3",
     "typescript-eslint": "^8.48.1",
@@ -31,14 +28,5 @@
   },
   "engines": {
     "node": ">=24.0.0"
-  },
-  "lint-staged": {
-    "*.{ts,vue,mts}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,css}": [
-      "prettier --write"
-    ]
   }
 }

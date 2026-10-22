@@ -1,4 +1,4 @@
-// ESLint's flat config — this file is the entire setup.
+// ESLint's flat config. This file is the entire setup.
 //
 // ESLint 9 reads `eslint.config.js` from the repo root; there is no `.eslintrc` anywhere. Flat
 // config is a list of config objects that ESLint merges in order, so the order below is the
@@ -52,16 +52,6 @@ export default tseslint.config(
     files: ['docs/tags/[[]tag].paths.js'],
     languageOptions: {
       globals: globals.node,
-    },
-  },
-  {
-    // Vue single-file components. The repo has no `.vue` file yet, so this block matches nothing
-    // today — it is here so that the day one lands, `vue/multi-word-component-names` is not the
-    // reason it fails. The theme's `Layout` component is a single word, which is exactly what
-    // that rule complains about.
-    files: ['**/*.vue'],
-    rules: {
-      'vue/multi-word-component-names': 'off',
     },
   },
 )
