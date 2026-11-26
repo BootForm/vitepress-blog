@@ -110,6 +110,29 @@ export function extractDescription(fileContent: string, maxLength: number = 300,
 
 export const extractExcerpt = extractDescription
 
+// Counts the words a reader actually reads: the frontmatter, the <script setup> block, HTML tags
+// (the hero <img>, the wrapper <div>s) and Vue interpolations (the tags loop's `#{{ tag }}`) are
+// all left out. A markdown link counts its text, never its URL, and a markdown image counts nothing.
+export function countWords(fileContent: string | undefined): number {
+  if (!fileContent) return 0
+  const text = stripFrontmatter(fileContent)
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    // The whole tags loop, so its `#{{ tag }}` and the text inside it never count.
+    .replace(/<(\w+)\b[^>]*\bv-for\s*=[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\{\{[\s\S]*?\}\}/g, ' ')
+    // Markdown images count nothing, links count their text: ![alt](url), [text](url)
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    // Ordered list markers: `1.` is a number, not a word
+    .replace(/^[ \t]*\d+\.[ \t]+/gm, ' ')
+  // A word is a run of letters or digits, so `#`, `-` and `**` count as nothing, and
+  // `shouldn't` or `decade-old` count once.
+  return text.match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu)?.length ?? 0
+}
+
 export function getGitLastUpdated(filePath: string): string | null {
   const { stdout, error, status } = spawnSync('git', ['log', '-1', '--pretty=%ai', '--', path.basename(filePath)], {
     cwd: path.dirname(filePath),
