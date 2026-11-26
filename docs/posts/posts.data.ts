@@ -8,7 +8,7 @@ import { createContentLoader } from 'vitepress'
 import { join } from 'path'
 import { authors } from '../.vitepress/authors'
 import { localConfig } from '../.vitepress/config'
-import { extractTitle, extractExcerpt, extractFirstImage, getGitLastUpdated, getDateByFileName, removeLeadingSlash } from '../../utils'
+import { extractTitle, extractExcerpt, extractFirstImage, countWords, getGitLastUpdated, getDateByFileName, removeLeadingSlash } from '../../utils'
 
 export interface Post {
   title: string
@@ -19,7 +19,12 @@ export interface Post {
   description: string
   image: string
   url: string
+  readingMinutes: number
 }
+
+// A typical adult reads about 200 words a minute. Rounded up, with a floor of 1, so a short post
+// still says "1 min read" rather than "0 min read".
+const WORDS_PER_MINUTE = 200
 
 declare const data: Post[]
 export { data }
@@ -36,6 +41,9 @@ export { data }
 // - image: the first markdown or <img> image in the post
 // - date: a YYYY-MM-DD in the file name, else the date of the file's last git commit
 // - description: the text between the `#` heading and the first `##`, trimmed to 300 characters
+//
+// readingMinutes is always worked out, never read from frontmatter: the post's words (countWords,
+// which skips the frontmatter and the markup) at WORDS_PER_MINUTE.
 //
 // Deliberately not using createContentLoader's own `excerpt` option for the description: it slices
 // the raw markdown from the top of the file down to a `<!-- more -->` marker, which on these posts
@@ -64,6 +72,7 @@ export default createContentLoader(`${removeLeadingSlash(localConfig.postsUrlPre
           tags: frontmatter.tags ?? [],
           description: frontmatter.description || extractExcerpt(src ?? '') || localConfig.defaultDescription,
           url,
+          readingMinutes: Math.max(1, Math.ceil(countWords(src) / WORDS_PER_MINUTE)),
         }
       })
       .sort((a, b) => +new Date(b.date) - +new Date(a.date))
