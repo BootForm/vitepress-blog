@@ -82,7 +82,7 @@ function formatDate(iso) {
     <img v-if="post.image" :src="withBase(post.image)" alt="" class="aspect-video w-full object-cover">
     <div class="flex flex-col gap-1 p-4">
       <h3 class="font-semibold text-black! group-hover:text-brand-500! dark:text-white!">{{ post.title }}</h3>
-      <p class="text-xs text-black/50! dark:text-white/50!">{{ formatDate(post.date) }} · {{ post.authorName }}</p>
+      <p class="text-xs text-black/50! dark:text-white/50!">{{ formatDate(post.date) }} · {{ post.readingMinutes }} min read · {{ post.authorName }}</p>
       <p class="text-sm leading-snug text-black/70! dark:text-white/70!">{{ post.description }}</p>
     </div>
   </a>
