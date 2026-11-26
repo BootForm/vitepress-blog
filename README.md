@@ -162,6 +162,12 @@ the way `posts/posts.data.ts` does.
 workflow pins Node 24 (`.github/workflows/deploy.yml`). Different Node major versions occasionally
 disagree on something.
 
+## Like it?
+
+If this saved you some time, a star on this repo helps other people find it. Everything else
+BootForm publishes is at [github.com/BootForm](https://github.com/BootForm): more templates, form
+styles and page sections, all free to copy.
+
 ## Licence
 
 MIT. Do whatever you like with it, including using it for a real business.
