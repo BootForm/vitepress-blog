@@ -31,7 +31,7 @@ function formatDate(iso) {
 <img v-if="post.image" :src="withBase(post.image)" alt="" class="aspect-video w-32 shrink-0 rounded-md object-cover sm:w-40">
 <div>
 <a :href="withBase(post.url)" class="text-xl font-semibold hover:text-brand-500">{{ post.title }}</a>
-<p class="mt-1! text-sm opacity-50">{{ formatDate(post.date) }} · {{ post.authorName }}</p>
+<p class="mt-1! text-sm opacity-50">{{ formatDate(post.date) }} · {{ post.readingMinutes }} min read · {{ post.authorName }}</p>
 <p class="mt-3! opacity-80">{{ post.description }}</p>
 <div v-if="post.tags.length" class="mt-3 flex flex-wrap gap-2">
 <a v-for="tag in post.tags" :key="tag" :href="withBase(`/tags/${tag}.html`)" class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 hover:bg-brand-500 hover:text-white dark:bg-brand-500/30 dark:text-white/90">#{{ tag }}</a>
